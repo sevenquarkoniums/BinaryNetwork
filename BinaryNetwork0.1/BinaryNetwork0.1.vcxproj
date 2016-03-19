@@ -192,16 +192,19 @@
     <ClInclude Include="BinaryNetwork0.1.h" />
     <ClInclude Include="BinaryNetwork0.1Doc.h" />
     <ClInclude Include="BinaryNetwork0.1View.h" />
+    <ClInclude Include="Cell.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Network.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BinaryNetwork0.1.cpp" />
     <ClCompile Include="BinaryNetwork0.1Doc.cpp" />
     <ClCompile Include="BinaryNetwork0.1View.cpp" />
+    <ClCompile Include="Cell.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="Network.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -210,6 +213,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="BinaryNetwork0.1.rc" />
