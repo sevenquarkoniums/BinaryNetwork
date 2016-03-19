@@ -5,8 +5,8 @@
 
 Network::Network():node(NULL),link(NULL)
 {
-	main.open("main.txt");
-	output.open("output.txt");
+	//main.open("main.txt");
+	//output.open("output.txt");
 
 }
 
@@ -14,8 +14,8 @@ Network::Network():node(NULL),link(NULL)
 Network::~Network()
 {
 	deleteNode();
-	main.close();
-	output.close();
+	//main.close();
+	//output.close();
 }
 
 void Network::deleteNode() {
@@ -61,25 +61,25 @@ void Network::generateNode() {
 
 }
 
-void Network::print() {
-	input.open("input.txt");
-	graph.open("graph.txt");
-
-	for (int i = 0; i < nodeNum; i++) {
-		input << node[i] << "\t";
-	}
-	input << "\n";
-	for (int i = 0; i < nodeNum; i++) {
-		for (int j = 0; j < nodeNum; j++) {
-			graph << link[i][j] << "\t";
-		}
-		graph << "\n";
-	}
-
-	input.close();
-	graph.close();
-
-}
+//void Network::print() {
+//	input.open("input.txt");
+//	graph.open("graph.txt");
+//
+//	for (int i = 0; i < nodeNum; i++) {
+//		input << node[i] << "\t";
+//	}
+//	input << "\n";
+//	for (int i = 0; i < nodeNum; i++) {
+//		for (int j = 0; j < nodeNum; j++) {
+//			graph << link[i][j] << "\t";
+//		}
+//		graph << "\n";
+//	}
+//
+//	input.close();
+//	graph.close();
+//
+//}
 
 void Network::steprun() {//output.txt should be open.
 	bool* nodeTemp=new bool[nodeNum];
