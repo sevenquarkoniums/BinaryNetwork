@@ -46,6 +46,7 @@ BOOL CBinaryNetwork01Doc::OnNewDocument()
 	// (SDI documents will reuse this document)
 	network.generateNode();
 
+
 	return TRUE;
 }
 
