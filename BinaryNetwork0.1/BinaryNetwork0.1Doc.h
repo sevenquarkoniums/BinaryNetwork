@@ -4,7 +4,8 @@
 
 
 #pragma once
-#include "Network.h"
+#include "Cell.h"
+#include "World.h"
 
 class CBinaryNetwork01Doc : public CDocument
 {
@@ -17,17 +18,33 @@ public:
 
 // Operations
 public:
-	void run(int step) {
-		network.run(step);
+	void Run();
+	int getCellNum() {
+		return cell.getNum();
 	}
-	int getNum() {
-		return network.getNum();
+	bool getCellVal(int pos) {
+		return cell.getVal(pos);
 	}
-	bool getVal(int pos) {
-		return network.getVal(pos);
+	int cellX() {
+		return cell.getX();
 	}
-	void steprun() {
-		network.steprun();
+	int cellY() {
+		return cell.getY();
+	}
+	int getCellSize() {
+		return cell.cellSize;
+	}
+	void cellStep(bool worldValue, int max);
+
+	bool getWorldVal(int x, int y)
+	{
+		return world.getValue(x, y);
+	}
+	int getWorldMax() {
+		return world.getMax();
+	}
+	int getWorldLength() {
+		return world.getLength();
 	}
 	//int getStep() {
 	//	return network.getStep();
@@ -51,7 +68,8 @@ public:
 #endif
 
 protected:
-	Network network;
+	World world;
+	Cell cell;
 
 // Generated message map functions
 protected:

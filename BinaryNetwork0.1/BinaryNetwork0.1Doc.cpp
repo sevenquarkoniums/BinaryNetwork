@@ -33,8 +33,25 @@ CBinaryNetwork01Doc::CBinaryNetwork01Doc()
 	network.generateNode();
 }
 
+void CBinaryNetwork01Doc::Run()
+{	
+	int x = cell.getX();
+	int y = cell.getY();
+	cellStep(world.getValue(x, y), world.getMax());
+	world.changeValue(x, y);
+
+}
+
 CBinaryNetwork01Doc::~CBinaryNetwork01Doc()
 {
+}
+
+void CBinaryNetwork01Doc::cellStep(bool worldValue, int max)
+{
+	cell.steprun(worldValue, max);
+	if (!cell.isAlive()) {
+		cell.~Cell();
+	}
 }
 
 BOOL CBinaryNetwork01Doc::OnNewDocument()
@@ -44,8 +61,9 @@ BOOL CBinaryNetwork01Doc::OnNewDocument()
 
 	// TODO: add reinitialization code here
 	// (SDI documents will reuse this document)
-	network.generateNode();
-
+	
+	//cell.generateNode();
+	//world.generateRandomWorld();
 
 	return TRUE;
 }
