@@ -3,11 +3,11 @@
 #include <fstream>
 
 
-Network::Network():node(NULL),link(NULL)
+Network::Network()
+	:node(NULL), link(NULL)
 {
 	//main.open("main.txt");
 	//output.open("output.txt");
-
 }
 
 
@@ -40,7 +40,6 @@ void Network::generateNode() {
 		deleteNode();
 	}
 	node = new bool[nodeNum];
-	srand(time(NULL));
 	for (int i = 0; i < nodeNum; i++) {
 		node[i] = bool(rand() % 2);
 	}

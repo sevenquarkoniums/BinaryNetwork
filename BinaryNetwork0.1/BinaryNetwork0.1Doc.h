@@ -6,6 +6,7 @@
 #pragma once
 #include "Cell.h"
 #include "World.h"
+#include <list>
 
 class CBinaryNetwork01Doc : public CDocument
 {
@@ -18,37 +19,27 @@ public:
 
 // Operations
 public:
-	void Run();
-	int getCellNum() {
-		return cell.getNum();
-	}
-	bool getCellVal(int pos) {
-		return cell.getVal(pos);
-	}
-	int cellX() {
-		return cell.getX();
-	}
-	int cellY() {
-		return cell.getY();
-	}
-	int getCellSize() {
-		return cell.cellSize;
-	}
-	void cellStep(bool worldValue, int max);
+	int getCellNum(std::list<Cell*>::iterator iCell);
+	bool getCellVal(std::list<Cell*>::iterator iCell, int pos);
+	int cellX(std::list<Cell*>::iterator iCell);
+	int cellY(std::list<Cell*>::iterator iCell);
 
-	bool getWorldVal(int x, int y)
-	{
-		return world.getValue(x, y);
-	}
-	int getWorldMax() {
-		return world.getMax();
-	}
-	int getWorldLength() {
-		return world.getLength();
-	}
-	//int getStep() {
-	//	return network.getStep();
-	//}
+	bool getWorldVal(std::list<World*>::iterator iWorld, int x, int y);
+	bool getWorldVal(World* sample, int x, int y);
+	int getWorldMax(std::list<World*>::iterator iWorld);
+	int getWorldMax(World* sample);
+	int getWorldLength(std::list<World*>::iterator iWorld);
+
+	void setInitLabNum(int num);
+	int getLabNum();
+	void setMutability(double num);
+	void runAll();
+	void runToEnd();
+
+	World* getSampleWorld();
+	//we cannot use list<Cell> here. push_back a Cell into list<Cell> results in change.
+	std::list<Cell*>::iterator getCellHead();
+	std::list<Cell*>::iterator getCellEnd();
 
 // Overrides
 public:
@@ -68,8 +59,13 @@ public:
 #endif
 
 protected:
-	World world;
-	Cell cell;
+	int labNum;//non-static initialization not supported in .h
+	double mutability;
+	Cell* newCell;
+	World* newWorld;
+	std::list<Cell*> tube;
+	std::list<World*> medium;
+	World* sampleWorld;
 
 // Generated message map functions
 protected:
