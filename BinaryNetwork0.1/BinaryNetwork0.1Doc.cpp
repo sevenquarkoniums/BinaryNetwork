@@ -10,7 +10,7 @@
 #endif
 
 #include "BinaryNetwork0.1Doc.h"
-
+//#include <list>
 #include <propkey.h>
 
 #ifdef _DEBUG
@@ -28,33 +28,139 @@ END_MESSAGE_MAP()
 // CBinaryNetwork01Doc construction/destruction
 
 CBinaryNetwork01Doc::CBinaryNetwork01Doc()
+	:labNum(20), mutability(0.1), sampleWorld(NULL)
 {
-	// TODO: add one-time construction code here
-	network.generateNode();
+	srand(time(NULL));//srand no more than once!!
+	sampleWorld = new World;
+	for (int i = 0; i < labNum; i++) {
+		tube.push_back(new Cell);
+		medium.push_back(new World);
+	}
 }
 
-void CBinaryNetwork01Doc::Run()
-{	
-	int x = cell.getX();
-	int y = cell.getY();
-	cellStep(world.getValue(x, y), world.getMax());
-	world.changeValue(x, y);
+int CBinaryNetwork01Doc::getCellNum(std::list<Cell*>::iterator iCell)
+{
+	return (*iCell)->getNum();
+}
 
+bool CBinaryNetwork01Doc::getCellVal(std::list<Cell*>::iterator iCell, int pos)
+{
+	return (*iCell)->getVal(pos);
+}
+
+int CBinaryNetwork01Doc::cellX(std::list<Cell*>::iterator iCell)
+{
+	return (*iCell)->getX();
+}
+
+int CBinaryNetwork01Doc::cellY(std::list<Cell*>::iterator iCell)
+{
+	return (*iCell)->getY();
+}
+
+bool CBinaryNetwork01Doc::getWorldVal(std::list<World*>::iterator iWorld, int x, int y)
+{
+	return (*iWorld)->getValue(x, y);
+}
+
+bool CBinaryNetwork01Doc::getWorldVal(World * sample, int x, int y)
+{
+	return sample->getValue(x, y);
+}
+
+int CBinaryNetwork01Doc::getWorldMax(std::list<World*>::iterator iWorld)
+{
+	return (*iWorld)->getMax();
+}
+
+int CBinaryNetwork01Doc::getWorldMax(World * sample)
+{
+	return sample->getMax();
+}
+
+int CBinaryNetwork01Doc::getWorldLength(std::list<World*>::iterator iWorld)
+{
+	return (*iWorld)->getLength();
+}
+
+void CBinaryNetwork01Doc::setInitLabNum(int num)
+{
+	labNum = num;
+}
+
+int CBinaryNetwork01Doc::getLabNum()
+{
+	return labNum;
+}
+
+void CBinaryNetwork01Doc::setMutability(double num)
+{
+	mutability = num;
 }
 
 CBinaryNetwork01Doc::~CBinaryNetwork01Doc()
 {
-}
-
-void CBinaryNetwork01Doc::cellStep(bool worldValue, int max)
-{
-	cell.steprun(worldValue, max);
-	if (!cell.isAlive()) {
-		cell.~Cell();
+	sampleWorld->~World();
+	std::list<Cell*>::iterator iCell = tube.begin();
+	std::list<World*>::iterator iWorld = medium.begin();
+	while (iCell != tube.end()) {
+		(*iCell)->~Cell();
+		(*iWorld)->~World();
+		iCell = tube.erase(iCell);
+		iWorld = medium.erase(iWorld);
 	}
 }
 
-BOOL CBinaryNetwork01Doc::OnNewDocument()
+void CBinaryNetwork01Doc::runAll()
+{
+	std::list<Cell*>::iterator iCell = tube.begin();
+	std::list<World*>::iterator iWorld = medium.begin();
+	while(iCell != tube.end()) {
+		int x = (*iCell)->getX();
+		int y = (*iCell)->getY();
+		if (x == 0) {
+			x=0;
+		}
+		(*iCell)->steprun((*iWorld)->getValue(x, y), (*iWorld)->getMax());
+		(*iWorld)->updateValue(x, y);
+		if (!(*iCell)->isAlive()) {
+			(*iCell)->~Cell();
+			(*iWorld)->~World();
+			iCell = tube.erase(iCell);
+			iWorld = medium.erase(iWorld);
+			labNum--;
+		}
+		else {
+			++iCell;
+			++iWorld;
+		}
+	}
+
+}
+
+void CBinaryNetwork01Doc::runToEnd()
+{
+	while (labNum > 1) {
+		runAll();
+	}
+}
+
+World * CBinaryNetwork01Doc::getSampleWorld()
+{
+	return sampleWorld;
+}
+
+std::list<Cell*>::iterator CBinaryNetwork01Doc::getCellHead()
+{
+	return tube.begin();
+}
+
+std::list<Cell*>::iterator CBinaryNetwork01Doc::getCellEnd()
+{
+	return tube.end();
+}
+
+BOOL CBinaryNetwork01Doc::OnNewDocument()//this function is not called at first run.
 {
 	if (!CDocument::OnNewDocument())
 		return FALSE;

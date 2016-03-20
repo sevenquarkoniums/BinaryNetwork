@@ -5,7 +5,7 @@ class Network
 {
 public:
 	Network();
-	~Network();
+	virtual ~Network();
 	void deleteNode();
 	void generateNode();
 	//void print();
@@ -15,7 +15,7 @@ public:
 	bool getVal(int pos);
 	//int getStep();
 protected:
-	const int nodeNum = 100;//nodeNum up to 1000 is supported. //Other number needs View modification.
+	static const int nodeNum = 100;//nodeNum up to 1000 is supported. //Other number needs View modification.
 	//const int step = 10;
 	//std::ofstream main;
 	//std::ofstream input;

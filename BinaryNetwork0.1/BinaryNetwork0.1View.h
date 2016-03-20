@@ -15,8 +15,23 @@ protected: // create from serialization only
 public:
 	CBinaryNetwork01Doc* GetDocument() const;
 
+	COLORREF white = RGB(255, 255, 255);
+	COLORREF grey = RGB(200, 200, 200);
+	COLORREF darkgrey = RGB(100, 100, 100);
+	COLORREF darkergrey = RGB(70, 70, 70);
+	int nodeHeight = 50;
+	int nodeWidth = 50;
+	int cellSize = 10;
+
 // Operations
 public:
+	void singleCell(std::list<Cell*>::iterator iCell);
+	void showBrain(std::list<Cell*>::iterator iCell);
+	void multipleCell(CDC * pDC, CBinaryNetwork01Doc * pDoc);
+	void drawBrain(CDC* pDC, CBinaryNetwork01Doc* pDoc, std::list<Cell*>::iterator iCell);
+	void drawCell(CDC* pDC, CBinaryNetwork01Doc* pDoc, std::list<Cell*>::iterator iCell);
+	void drawWorld(CDC * pDC, CBinaryNetwork01Doc * pDoc, World* sample);
+	void drawWorld(CDC* pDC, CBinaryNetwork01Doc* pDoc, std::list<World*>::iterator iWorld);
 
 // Overrides
 public:
