@@ -83,37 +83,38 @@ void Network::generateNode() {
 
 void Network::steprun() {//output.txt should be open.
 	bool* nodeTemp=new bool[nodeNum];
-		for (int inode = 0; inode < nodeNum; inode++) {
-			int sum = 0;
-			for (int jnode = 0; jnode < inode; jnode++) {
-				if (link[inode][jnode] == 1 && node[jnode] == 1) {
-					sum++;
-				}
+	for (int inode = 0; inode < nodeNum; inode++) {
+		int sum = 0;
+		for (int jnode = 0; jnode < inode; jnode++) {
+			if (link[inode][jnode] == 1 && node[jnode] == 1) {
+				sum++;
 			}
-			for (int jnode = inode + 1; jnode < nodeNum; jnode++) {
-				if (link[inode][jnode] == 1 && node[jnode] == 1) {
-					sum++;
-				}
+		}
+		for (int jnode = inode + 1; jnode < nodeNum; jnode++) {
+			if (link[inode][jnode] == 1 && node[jnode] == 1) {
+				sum++;
 			}
-			//main << sum << "\n";
-			nodeTemp[inode] = bool(sum % 2);
 		}
-		for (int inode = 0; inode < nodeNum; inode++) {
-			node[inode] = nodeTemp[inode];
-		}
-
-		//for (int inode = 0; inode < nodeNum; inode++) {
-		//	output << node[inode];// << "\t";
-		//}
-		//output << "\n";
-		delete[] nodeTemp;
-}
-
-void Network::run(int step) {//output.txt should be open.
-	for (int istep = 0; istep < step; istep++) {
-		steprun();
+		//main << sum << "\n";
+		nodeTemp[inode] = bool(sum % 2);
 	}
+	for (int inode = 0; inode < nodeNum; inode++) {
+		node[inode] = nodeTemp[inode];
+	}
+
+	//for (int inode = 0; inode < nodeNum; inode++) {
+	//	output << node[inode];// << "\t";
+	//}
+	//output << "\n";
+
+	delete[] nodeTemp;
 }
+
+//void Network::run(int step) {//output.txt should be open.
+//	for (int istep = 0; istep < step; istep++) {
+//		steprun();
+//	}
+//}
 
 int Network::getNum()
 {

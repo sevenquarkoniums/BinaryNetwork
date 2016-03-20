@@ -74,10 +74,10 @@ void CBinaryNetwork01View::OnDraw(CDC* pDC)
 	br.CreateStockObject(HOLLOW_BRUSH);
 	CBrush* pbrOld = pDC->SelectObject(&br);
 
-	int col = int(sqrt(pDoc->getNum()));
-	int row = int(pDoc->getNum() / col);
+	int col = int(sqrt(pDoc->getCellNum()));
+	int row = int(pDoc->getCellNum() / col);
 	int rowplus = row + 1;
-	int colplus = pDoc->getNum() - row*col;
+	int colplus = pDoc->getCellNum() - row*col;
 	for (int irow = 0; irow < row; irow++)
 	{
 		for (int icol = 0; icol < col; icol++)
@@ -87,7 +87,7 @@ void CBinaryNetwork01View::OnDraw(CDC* pDC)
 			nodeShow.left = icol * nodeWidth;
 			nodeShow.right = nodeShow.left + nodeWidth;
 			nodeShow.bottom = nodeShow.top + nodeHeight;
-			if (pDoc->getVal(col*irow + icol) == 1) {
+			if (pDoc->getCellVal(col*irow + icol)) {
 				pDC->FillSolidRect(&nodeShow, grey);
 			}
 			else {
@@ -97,6 +97,37 @@ void CBinaryNetwork01View::OnDraw(CDC* pDC)
 		}
 	}
 	//code for rowplus needed here.
+
+	int max = pDoc->getWorldMax();
+	for (int irow = -max; irow <= max; irow++)
+	{
+		for (int icol = -max; icol <= max; icol++)
+		{
+			CRect worldShow;
+			int cellSize = pDoc->getCellSize();
+			worldShow.top = 450 - icol * cellSize;
+			worldShow.left = 1100 + irow * cellSize;
+			worldShow.right = worldShow.left + cellSize;
+			worldShow.bottom = worldShow.top + cellSize;
+			if (pDoc->getWorldVal(irow, icol)) {
+				pDC->FillSolidRect(&worldShow, grey);
+			}
+			else {
+				pDC->FillSolidRect(&worldShow, darkergrey);
+			}
+			pDC->Rectangle(&worldShow);
+		}
+	}
+
+	CRect cellShow;
+	int cellSize = pDoc->getCellSize();
+	cellShow.top = 450 - cellSize * pDoc->cellY();
+	cellShow.left = 1100 + cellSize  *pDoc->cellX();
+	cellShow.right = cellShow.left + cellSize;
+	cellShow.bottom = cellShow.top + cellSize;
+	pDC->FillSolidRect(&cellShow, white);
+	pDC->Rectangle(&cellShow);
+
 	//pDC->RestoreDC(nDCSave);
 	br.DeleteObject();
 }
@@ -149,10 +180,26 @@ void CBinaryNetwork01View::OnLButtonDown(UINT nFlags, CPoint point)
 
 	const int step = 100;
 	for (int istep = 0; istep < step; istep++) {
-		pDoc->steprun();
-		Invalidate();
+		pDoc->Run();
+
+		CRect cellNeighbor;
+		int cellSize = pDoc->getCellSize();
+		cellNeighbor.top = 450 - cellSize*pDoc->cellY() - cellSize;
+		cellNeighbor.left = 1100 + cellSize*pDoc->cellX() - cellSize;
+		cellNeighbor.right = cellNeighbor.left + 3 * cellSize;
+		cellNeighbor.bottom = cellNeighbor.top + 3 * cellSize;
+
+		CRect brainArea;
+		brainArea.top = 0;
+		brainArea.bottom = 500;
+		brainArea.left = 0;
+		brainArea.right = 500;
+
+
+		InvalidateRect(&cellNeighbor);
+		InvalidateRect(&brainArea);
 		UpdateWindow();
-		Sleep(150);
+		//Sleep(100);
 	}
 
 	CView::OnLButtonDown(nFlags, point);
@@ -167,8 +214,23 @@ void CBinaryNetwork01View::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	if (!pDoc)
 		return;
 
-	pDoc->steprun();
-	Invalidate();
+	pDoc->Run();
+
+	CRect cellNeighbor;
+	int cellSize = pDoc->getCellSize();
+	cellNeighbor.top = 400 - cellSize*pDoc->cellY() - cellSize;
+	cellNeighbor.left = 1100 + cellSize*pDoc->cellX() - cellSize;
+	cellNeighbor.right = cellNeighbor.left + 3 * cellSize;
+	cellNeighbor.bottom = cellNeighbor.top + 3 * cellSize;
+
+	CRect brainArea;
+	brainArea.top = 0;
+	brainArea.bottom = 500;
+	brainArea.left = 0;
+	brainArea.right = 500;
+
+	InvalidateRect(&cellNeighbor);
+	InvalidateRect(&brainArea);
 	UpdateWindow();
 
 	CView::OnKeyDown(nChar, nRepCnt, nFlags);
