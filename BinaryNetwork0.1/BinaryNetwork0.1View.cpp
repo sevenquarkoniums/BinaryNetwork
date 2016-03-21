@@ -216,6 +216,18 @@ void CBinaryNetwork01View::OnDraw(CDC* pDC)
 
 	multipleCell(pDC, pDoc);
 
+	CString labCount;
+	labCount.Format(_T("Lab Number: %d"), pDoc->getLabNum());
+	pDC->TextOut(800, 10, labCount);
+
+	CString day;
+	day.Format(_T("Lab Day: %d"), pDoc->getLabDay());
+	pDC->TextOut(1000, 10, day);
+
+	CString best;
+	best.Format(_T("Best to right: %d"), pDoc->getBest());
+	pDC->TextOut(1200, 10, best);
+
 	//drawBrain(pDC, pDoc);
 	//drawWorld(pDC, pDoc);
 	//drawCell(pDC, pDoc);
@@ -268,10 +280,9 @@ void CBinaryNetwork01View::OnLButtonDown(UINT nFlags, CPoint point)
 	if (!pDoc)
 		return;
 
-	int day = 1;
 	while (pDoc->getLabNum() > 5) {
 		pDoc->runAll();
-		if (day % pDoc->reproDay == 0) {
+		if (pDoc->getLabDay() % pDoc->reproDay == 0) {
 			pDoc->reproduce();
 		}
 
@@ -287,10 +298,20 @@ void CBinaryNetwork01View::OnLButtonDown(UINT nFlags, CPoint point)
 		shortWorldSpace.right = shortWorldSpace.left + 31 * cellSize;
 		shortWorldSpace.bottom = shortWorldSpace.top + 31 * cellSize;
 
+		CRect textpace;
+		textpace.top = 10;
+		textpace.left = 800;
+		textpace.right = 1400;
+		textpace.bottom = 40;
+
 		InvalidateRect(&shortWorldSpace);
+		InvalidateRect(&textpace);
 		UpdateWindow();
-		day++;
 	}
+
+	CString stopMessage;
+	stopMessage.Format(_T("Best results to the right: %d"), pDoc->getBest());
+	MessageBox(stopMessage, _T("Simulation finished."), MB_OK | MB_ICONINFORMATION);
 
 	CView::OnLButtonDown(nFlags, point);
 }

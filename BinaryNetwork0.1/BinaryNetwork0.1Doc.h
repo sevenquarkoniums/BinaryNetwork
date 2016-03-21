@@ -37,6 +37,8 @@ public:
 	void runToEnd();
 	void reproduce();
 	int reproDay;
+	int getLabDay();
+	int getBest();
 
 	World* getSampleWorld();
 	//we cannot use list<Cell> here. push_back a Cell into list<Cell> results in change.
@@ -64,6 +66,9 @@ protected:
 	int labNum;//non-static initialization not supported in .h
 	double mutability;
 	int reproNum;
+	int labDay;
+	int best;
+
 	Cell* newCell;
 	World* newWorld;
 	std::list<Cell*> tube;

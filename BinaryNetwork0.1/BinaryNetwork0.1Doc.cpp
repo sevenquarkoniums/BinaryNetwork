@@ -28,7 +28,7 @@ END_MESSAGE_MAP()
 // CBinaryNetwork01Doc construction/destruction
 
 CBinaryNetwork01Doc::CBinaryNetwork01Doc()
-	:labNum(500), mutability(0.01), reproNum(100), reproDay(7), sampleWorld(NULL)
+	:labNum(1000), mutability(0.1), reproNum(256), reproDay(7), labDay(0), best(0), sampleWorld(NULL)
 {
 	srand(time(NULL));//srand no more than once!!
 	sampleWorld = new World;
@@ -118,11 +118,13 @@ void CBinaryNetwork01Doc::runAll()
 	while(iCell != tube.end()) {
 		int x = (*iCell)->getX();
 		int y = (*iCell)->getY();
-		if (x == 0) {
-			x=0;
+		if (x > best) {
+			best = x;
 		}
+
 		(*iCell)->steprun((*iWorld)->getValue(x, y), (*iWorld)->getMax());
 		(*iWorld)->updateValue(x, y);
+
 		if (!(*iCell)->isAlive()) {
 			(*iCell)->~Cell();
 			(*iWorld)->~World();
@@ -135,7 +137,7 @@ void CBinaryNetwork01Doc::runAll()
 			++iWorld;
 		}
 	}
-
+	labDay++;
 }
 
 void CBinaryNetwork01Doc::runToEnd()
@@ -160,6 +162,16 @@ void CBinaryNetwork01Doc::reproduce()
 		++iCell;
 		++iWorld;
 	}
+}
+
+int CBinaryNetwork01Doc::getLabDay()
+{
+	return labDay;
+}
+
+int CBinaryNetwork01Doc::getBest()
+{
+	return best;
 }
 
 World * CBinaryNetwork01Doc::getSampleWorld()
