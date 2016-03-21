@@ -35,6 +35,8 @@ public:
 	void setMutability(double num);
 	void runAll();
 	void runToEnd();
+	void reproduce();
+	int reproDay;
 
 	World* getSampleWorld();
 	//we cannot use list<Cell> here. push_back a Cell into list<Cell> results in change.
@@ -61,6 +63,7 @@ public:
 protected:
 	int labNum;//non-static initialization not supported in .h
 	double mutability;
+	int reproNum;
 	Cell* newCell;
 	World* newWorld;
 	std::list<Cell*> tube;

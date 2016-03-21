@@ -9,6 +9,7 @@ public:
 	void setup(int pmax, int plength);
 	void generateRandomWorld();
 	void generateSquareWave();//with Wavelength=10
+	void generateLine();
 	void deleteWorld();
 	bool getValue(int x, int y);
 	void updateValue(int x, int y);

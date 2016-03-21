@@ -24,6 +24,7 @@ private:
 	int x;
 	int y;
 	int notHunger;
+	static const int initNotHunger = 3;
 	static const int minDelay = 10;
 	static const int maxDelay = 30;
 	//int x = 0;
