@@ -268,9 +268,29 @@ void CBinaryNetwork01View::OnLButtonDown(UINT nFlags, CPoint point)
 	if (!pDoc)
 		return;
 
-	pDoc->runToEnd();
-	Invalidate();
-	UpdateWindow();
+	int day = 1;
+	while (pDoc->getLabNum() > 5) {
+		pDoc->runAll();
+		if (day % pDoc->reproDay == 0) {
+			pDoc->reproduce();
+		}
+
+		//CRect worldSpace;
+		//worldSpace.top = 450 - cellSize * 40;
+		//worldSpace.left = 1100 - cellSize * 40;
+		//worldSpace.right = worldSpace.left + 81 * cellSize;
+		//worldSpace.bottom = worldSpace.top + 81 * cellSize;
+
+		CRect shortWorldSpace;
+		shortWorldSpace.top = 450 - cellSize * 15;
+		shortWorldSpace.left = 1100 - cellSize * 15;
+		shortWorldSpace.right = shortWorldSpace.left + 31 * cellSize;
+		shortWorldSpace.bottom = shortWorldSpace.top + 31 * cellSize;
+
+		InvalidateRect(&shortWorldSpace);
+		UpdateWindow();
+		day++;
+	}
 
 	CView::OnLButtonDown(nFlags, point);
 }
@@ -284,7 +304,14 @@ void CBinaryNetwork01View::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		return;
 
 	pDoc->runAll();
-	Invalidate();
+
+	CRect worldSpace;
+	worldSpace.top = 450 - cellSize*40;
+	worldSpace.left = 1100 - cellSize*40;
+	worldSpace.right = worldSpace.left + 81*cellSize;
+	worldSpace.bottom = worldSpace.top + 81*cellSize;
+
+	InvalidateRect(&worldSpace);
 	UpdateWindow();
 
 	CView::OnKeyDown(nChar, nRepCnt, nFlags);

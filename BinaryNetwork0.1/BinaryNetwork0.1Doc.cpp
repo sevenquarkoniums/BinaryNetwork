@@ -28,7 +28,7 @@ END_MESSAGE_MAP()
 // CBinaryNetwork01Doc construction/destruction
 
 CBinaryNetwork01Doc::CBinaryNetwork01Doc()
-	:labNum(20), mutability(0.1), sampleWorld(NULL)
+	:labNum(500), mutability(0.01), reproNum(100), reproDay(7), sampleWorld(NULL)
 {
 	srand(time(NULL));//srand no more than once!!
 	sampleWorld = new World;
@@ -142,6 +142,23 @@ void CBinaryNetwork01Doc::runToEnd()
 {
 	while (labNum > 1) {
 		runAll();
+	}
+}
+
+void CBinaryNetwork01Doc::reproduce()
+{
+	std::list<Cell*>::iterator iCell = tube.begin();
+	std::list<World*>::iterator iWorld = medium.begin();
+	while (iCell != tube.end()) {
+		for (int i = 0; i < reproNum; i++) {
+			tube.push_front(new Cell(**iCell, mutability));
+			medium.push_front(new World);
+		}
+		//tube.push_front(new Cell(**iCell));
+		//medium.push_front(new World);
+		labNum += reproNum;
+		++iCell;
+		++iWorld;
 	}
 }
 
