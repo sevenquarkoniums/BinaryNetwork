@@ -280,6 +280,11 @@ void CBinaryNetwork01View::OnLButtonDown(UINT nFlags, CPoint point)
 	if (!pDoc)
 		return;
 
+	////for eternal trial run
+	//while (pDoc->getLabNum() < 100000) {
+	//	pDoc->stableRun();
+		
+		//for survival and reproduce run
 	while (pDoc->getLabNum() > 5) {
 		pDoc->runAll();
 		if (pDoc->getLabDay() % pDoc->reproDay == 0) {

@@ -34,7 +34,7 @@ public:
 	int getLabNum();
 	void setMutability(double num);
 	void runAll();
-	void runToEnd();
+	void stableRun();
 	void reproduce();
 	int reproDay;
 	int getLabDay();

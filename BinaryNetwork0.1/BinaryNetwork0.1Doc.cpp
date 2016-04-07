@@ -28,7 +28,7 @@ END_MESSAGE_MAP()
 // CBinaryNetwork01Doc construction/destruction
 
 CBinaryNetwork01Doc::CBinaryNetwork01Doc()
-	:labNum(1000), mutability(0.1), reproNum(256), reproDay(7), labDay(0), best(0), sampleWorld(NULL)
+	:labNum(300), mutability(0.1), reproNum(32), reproDay(10), labDay(0), best(0), sampleWorld(NULL)
 {
 	srand(time(NULL));//srand no more than once!!
 	sampleWorld = new World;
@@ -140,11 +140,35 @@ void CBinaryNetwork01Doc::runAll()
 	labDay++;
 }
 
-void CBinaryNetwork01Doc::runToEnd()
+void CBinaryNetwork01Doc::stableRun()
 {
-	while (labNum > 1) {
-		runAll();
+	std::list<Cell*>::iterator iCell = tube.begin();
+	std::list<World*>::iterator iWorld = medium.begin();
+	while (iCell != tube.end()) {
+		int x = (*iCell)->getX();
+		int y = (*iCell)->getY();
+		if (x > best) {
+			best = x;
+		}
+
+		(*iCell)->steprun((*iWorld)->getValue(x, y), (*iWorld)->getMax());
+		(*iWorld)->updateValue(x, y);
+
+		if (!(*iCell)->isAlive()) {
+			(*iCell)->~Cell();
+			(*iWorld)->~World();
+			iCell = tube.erase(iCell);
+			iWorld = medium.erase(iWorld);
+			tube.push_front(new Cell);
+			medium.push_front(new World);
+			labNum++;
+		}
+		else {
+			++iCell;
+			++iWorld;
+		}
 	}
+	labDay++;
 }
 
 void CBinaryNetwork01Doc::reproduce()
@@ -194,11 +218,28 @@ BOOL CBinaryNetwork01Doc::OnNewDocument()//this function is not called at first 
 	if (!CDocument::OnNewDocument())
 		return FALSE;
 
-	// TODO: add reinitialization code here
-	// (SDI documents will reuse this document)
-	
-	//cell.generateNode();
-	//world.generateRandomWorld();
+	//just destructor and constructor again.
+	//sampleWorld->~World();
+	//std::list<Cell*>::iterator iCell = tube.begin();
+	//std::list<World*>::iterator iWorld = medium.begin();
+	//while (iCell != tube.end()) {
+	//	(*iCell)->~Cell();
+	//	(*iWorld)->~World();
+	//	iCell = tube.erase(iCell);
+	//	iWorld = medium.erase(iWorld);
+	//}
+
+	//labNum = 1000;
+	//mutability = 0.1;
+	//reproNum = 256;
+	//reproDay = 7;
+	//labDay = 0;
+	//best = 0;
+	//sampleWorld = new World;
+	//for (int i = 0; i < labNum; i++) {
+	//	tube.push_back(new Cell);
+	//	medium.push_back(new World);
+	//}
 
 	return TRUE;
 }
