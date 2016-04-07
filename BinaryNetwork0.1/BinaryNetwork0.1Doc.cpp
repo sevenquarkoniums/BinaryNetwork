@@ -30,7 +30,7 @@ END_MESSAGE_MAP()
 CBinaryNetwork01Doc::CBinaryNetwork01Doc()
 {
 	// TODO: add one-time construction code here
-
+	network.generateNode();
 }
 
 CBinaryNetwork01Doc::~CBinaryNetwork01Doc()
