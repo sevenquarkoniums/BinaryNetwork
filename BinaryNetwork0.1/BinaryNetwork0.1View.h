@@ -25,16 +25,23 @@ public:
 
 // Operations
 public:
+	//update brainArea for a single cell. Number of steps defined here.
 	void singleCell(std::list<Cell*>::iterator iCell);
+	//to be added.
 	void showBrain(std::list<Cell*>::iterator iCell);
+	//drawCell() and drawWorld()
 	void multipleCell(CDC * pDC, CBinaryNetwork01Doc * pDoc);
+	//draw a single brain.
 	void drawBrain(CDC* pDC, CBinaryNetwork01Doc* pDoc, std::list<Cell*>::iterator iCell);
+	//draw a single cell.
 	void drawCell(CDC* pDC, CBinaryNetwork01Doc* pDoc, std::list<Cell*>::iterator iCell);
+	//draw the sample world.
 	void drawWorld(CDC * pDC, CBinaryNetwork01Doc * pDoc, World* sample);
 	void drawWorld(CDC* pDC, CBinaryNetwork01Doc* pDoc, std::list<World*>::iterator iWorld);
 
 // Overrides
 public:
+	//OnDraw is called at beginning and every time updateWindow().
 	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 protected:
