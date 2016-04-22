@@ -80,7 +80,7 @@ void Network::generateNode() {
 //
 //}
 
-void Network::steprun() {//output.txt should be open.
+void Network::steprun() {
 	bool* nodeTemp=new bool[nodeNum];
 	for (int inode = 0; inode < nodeNum; inode++) {
 		int sum = 0;
@@ -101,6 +101,7 @@ void Network::steprun() {//output.txt should be open.
 		node[inode] = nodeTemp[inode];
 	}
 
+    //output.txt should be open if outputs.
 	//for (int inode = 0; inode < nodeNum; inode++) {
 	//	output << node[inode];// << "\t";
 	//}

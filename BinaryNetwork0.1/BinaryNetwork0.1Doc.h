@@ -11,6 +11,7 @@
 class CBinaryNetwork01Doc : public CDocument
 {
 protected: // create from serialization only
+	//set random seed. Generate World and all the labs.
 	CBinaryNetwork01Doc();
 	DECLARE_DYNCREATE(CBinaryNetwork01Doc)
 
@@ -33,8 +34,12 @@ public:
 	void setInitLabNum(int num);
 	int getLabNum();
 	void setMutability(double num);
+
+	//In one labDay, let all Cells in all Worlds move one step.
 	void runAll();
+	//Run all Cells one step. If died, create a new one.
 	void stableRun();
+	//Create new Cells according to mutability.
 	void reproduce();
 	int reproDay;
 	int getLabDay();
@@ -47,6 +52,7 @@ public:
 
 // Overrides
 public:
+	//currently nothing happens.
 	virtual BOOL OnNewDocument();
 	virtual void Serialize(CArchive& ar);
 #ifdef SHARED_HANDLERS
@@ -56,6 +62,7 @@ public:
 
 // Implementation
 public:
+	//delete all the Worlds and Cells.
 	virtual ~CBinaryNetwork01Doc();
 #ifdef _DEBUG
 	virtual void AssertValid() const;
@@ -63,16 +70,19 @@ public:
 #endif
 
 protected:
-	int labNum;//non-static initialization not supported in .h
+	//Number of different simulation running simultaneously. non-static initialization not supported in .h
+	int labNum;
 	double mutability;
 	int reproNum;
 	int labDay;
+	//records the farthest place reached by cell.
 	int best;
 
 	Cell* newCell;
 	World* newWorld;
 	std::list<Cell*> tube;
 	std::list<World*> medium;
+	//Used in GUI, because empty worlds are all the same for all labs.
 	World* sampleWorld;
 
 // Generated message map functions

@@ -1,3 +1,22 @@
+
+
+Network.h   nodeNum initialized here.
+			Network class is inherited by Cell.
+Cell.h		initNotHunger initialized here.
+			Inherited from Network.
+			Cell walk decision time range minDelay/maxDelay initialized.
+World.cpp	Initial setup of world in World(). Three different initial configuration can be chosen.
+BinaryNetwork0.1Doc.cpp    Parameter initialization in CBinaryNetwork01Doc().
+BinaryNetwork0.1View.cpp   Beginning screen and updateWindow() results are set in OnDraw().
+						   Main function is implemented in OnLButtonDown().
+						   OnKeyDown() is the results of on-step-move, without reproduction.
+BinaryNetwork0.1View.h	   Display attributes are defined here.
+
+
+
+
+
+
 ================================================================================
     MICROSOFT FOUNDATION CLASS LIBRARY : BinaryNetwork0.1 Project Overview
 ===============================================================================
