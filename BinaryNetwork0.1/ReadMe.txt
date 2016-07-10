@@ -28,8 +28,8 @@ I hope to see some cells will gain the ability to travel far along the 'food tra
 
 When the world is initialized, click to begin simulation!
 
-the GUI of master shows the firing of neurons of a single brain.
-version0.3 shows the position of the cells in this evolution process.
+branch singleBrain shows the firing of neurons of a single brain.
+branch master/version0.3 shows the cell evolution process.
 
 source code in C++
 GUI is implemented with MFC.
