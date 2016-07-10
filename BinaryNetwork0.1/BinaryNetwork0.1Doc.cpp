@@ -28,7 +28,7 @@ END_MESSAGE_MAP()
 // CBinaryNetwork01Doc construction/destruction
 
 CBinaryNetwork01Doc::CBinaryNetwork01Doc()
-	:labNum(300), mutability(0.1), reproNum(32), reproDay(10), labDay(0), best(0), sampleWorld(NULL)
+	:labNum(1000), mutability(0.1), reproNum(32), reproDay(10), labDay(0), best(0), sampleWorld(NULL)
 {
 	srand(time(NULL));//srand no more than once!!
 	sampleWorld = new World;

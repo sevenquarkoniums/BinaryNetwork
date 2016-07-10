@@ -41,7 +41,8 @@ void Network::generateNode() {
 	}
 	node = new bool[nodeNum];
 	for (int i = 0; i < nodeNum; i++) {
-		node[i] = bool(rand() % 2);
+		//node[i] = bool(rand() % 2); //randomly initialize the state of neurons in the brain
+		node[i] = bool(i % 2); //always initialize in a definite type, so that the sons of the living cells perform better.
 	}
 
 	link = new bool*[nodeNum];
