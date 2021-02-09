@@ -1,5 +1,3 @@
-Author: Yijia Zhang
-
 This is an application simulating a working virtual 'brain' which is in a preliminary form of binary signals.
 Currently one 'brain' here have nodeNum=100 neurons, neurons are chosen to be randomly connected at the time of initialization.
 For every time step, firing neurons send signals to all the directly connected neurons, and the neurons' state at the next time
